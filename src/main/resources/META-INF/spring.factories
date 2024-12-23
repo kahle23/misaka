@@ -1,6 +1,7 @@
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
 baibao.extension.bank.support.supfree.SupfreeNetAutoConfiguration,\
 baibao.extension.device.support.DeviceAutoConfiguration,\
+baibao.io.oss.support.aliyun.AliYunOssAutoConfiguration,\
 baibao.extension.ip.support.ipapi.IpApiAutoConfiguration
 
 

@@ -50,6 +50,14 @@ public class ObsStorage extends AbstractOssStorage {
     }
 
     @Override
+    public boolean exist(Object key) {
+        OssBase ossBase = getOssBase(key);
+        String bucketName = ossBase.getBucketName();
+        String objectKey = ossBase.getObjectKey();
+        return obsClient.doesObjectExist(bucketName, objectKey);
+    }
+
+    @Override
     public OssObject get(Object key) {
         OssBase ossBase = getOssBase(key);
         String bucketName = ossBase.getBucketName();
@@ -57,14 +65,6 @@ public class ObsStorage extends AbstractOssStorage {
         ObsObject obsObject = obsClient.getObject(bucketName, objectKey);
         if (obsObject == null) { return null; }
         return BeanUtils.beanToBean(obsObject, OssObjectImpl.class);
-    }
-
-    @Override
-    public boolean exist(Object key) {
-        OssBase ossBase = getOssBase(key);
-        String bucketName = ossBase.getBucketName();
-        String objectKey = ossBase.getObjectKey();
-        return obsClient.doesObjectExist(bucketName, objectKey);
     }
 
     @Override
