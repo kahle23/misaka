@@ -22,11 +22,11 @@ import ${javaType};
 public class ${queryClassName} implements Serializable {
 
     /**
-     * 页码.
+     * 页码
      */
     private Integer pageNum;
     /**
-     * 每页条数.
+     * 每页条数
      */
     private Integer pageSize;
 
@@ -41,7 +41,7 @@ public class ${queryClassName} implements Serializable {
             or $curColumnComment.contains('id')
             or $curColumnComment.contains('状态'))
     /**
-     * $!{column.comment}.
+     * $!{column.comment}
      */
     private List<${column.javaType}> ${column.fieldName}List;
 #elseif($curColumnComment.contains('name')
@@ -51,12 +51,12 @@ public class ${queryClassName} implements Serializable {
             or $curColumnComment.contains('手机')
             or $curColumnComment.contains('姓名'))
     /**
-     * $!{column.comment}（支持模糊搜索）.
+     * $!{column.comment}（支持模糊搜索）
      */
     private ${column.javaType} ${column.fieldName}Like;
 #else
     /**
-     * $!{column.comment}.
+     * $!{column.comment}
      */
     private ${column.javaType} ${column.fieldName};
 #end

@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>io.github.kahle23</groupId>
     <artifactId>baibao</artifactId>
-    <version>1.0.0.20240503.beta3</version>
+    <version>1.0.0.20240503.beta4</version>
     <packaging>jar</packaging>
     <name>baibao</name>
     <url>https://github.com/kahle23/baibao</url>
@@ -58,7 +58,7 @@
         <dependency>
             <groupId>io.github.kahle23</groupId>
             <artifactId>kunlun-plus</artifactId>
-            <version>1.0.0.20240503.beta3</version>
+            <version>1.0.0.20240503.beta5</version>
         </dependency>
         <!-- ///// end kunlun-plus //// -->
 

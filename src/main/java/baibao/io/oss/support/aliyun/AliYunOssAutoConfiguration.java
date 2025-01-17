@@ -28,7 +28,7 @@ public class AliYunOssAutoConfiguration {
     public AliYunOssAutoConfiguration(AliYunOssProperties ossProperties) {
         Assert.notNull(ossProperties, "Parameter \"ossProperties\" must not null. ");
         Assert.notBlank(ossProperties.getAccessKeyId(), "Parameter \"accessKeyId\" must not blank. ");
-        Assert.notBlank(ossProperties.getSecretAccessKey(), "Parameter \"secretAccessKey\" must not blank. ");
+        Assert.notBlank(ossProperties.getAccessKeySecret(), "Parameter \"accessKeySecret\" must not blank. ");
         Assert.notBlank(ossProperties.getEndpoint(), "Parameter \"endpoint\" must not blank. ");
         this.ossProperties = ossProperties;
     }
@@ -37,7 +37,7 @@ public class AliYunOssAutoConfiguration {
     public OSS ossClient() {
         Map<String, String> urlPrefixes = ossProperties.getObjectUrlPrefixes();
         if (urlPrefixes == null) { urlPrefixes = Collections.emptyMap(); }
-        String secretAccessKey = ossProperties.getSecretAccessKey();
+        String secretAccessKey = ossProperties.getAccessKeySecret();
         String defaultBucket = ossProperties.getDefaultBucket();
         String accessKeyId = ossProperties.getAccessKeyId();
         String endpoint = ossProperties.getEndpoint();

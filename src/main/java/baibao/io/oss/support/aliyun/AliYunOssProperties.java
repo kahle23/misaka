@@ -14,7 +14,7 @@ public class AliYunOssProperties {
     /**
      * SK in the access key.
      */
-    private String secretAccessKey;
+    private String accessKeySecret;
     /**
      * OBS endpoint.
      */
@@ -44,12 +44,12 @@ public class AliYunOssProperties {
         this.accessKeyId = accessKeyId;
     }
 
-    public String getSecretAccessKey() {
-        return secretAccessKey;
+    public String getAccessKeySecret() {
+        return accessKeySecret;
     }
 
-    public void setSecretAccessKey(String secretAccessKey) {
-        this.secretAccessKey = secretAccessKey;
+    public void setAccessKeySecret(String accessKeySecret) {
+        this.accessKeySecret = accessKeySecret;
     }
 
     public String getEndpoint() {

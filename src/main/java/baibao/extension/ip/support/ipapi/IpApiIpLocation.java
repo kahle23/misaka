@@ -27,6 +27,20 @@ public class IpApiIpLocation extends IpLocation implements Serializable {
      */
     private String as;
 
+    public IpApiIpLocation(String ipAddress, String address) {
+        setIpAddress(ipAddress);
+        setAddress(address);
+    }
+
+    public IpApiIpLocation(String ipAddress) {
+
+        setIpAddress(ipAddress);
+    }
+
+    public IpApiIpLocation() {
+
+    }
+
     public String getOrg() {
 
         return org;

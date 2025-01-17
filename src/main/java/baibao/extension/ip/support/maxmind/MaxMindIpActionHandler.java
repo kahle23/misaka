@@ -12,6 +12,7 @@ import com.maxmind.geoip2.model.CityResponse;
 import com.maxmind.geoip2.record.*;
 import kunlun.action.support.AbstractClassicActionHandler;
 import kunlun.exception.ExceptionUtils;
+import kunlun.util.Assert;
 import kunlun.util.ObjectUtils;
 import kunlun.util.StringUtils;
 import org.slf4j.Logger;
@@ -29,7 +30,6 @@ import java.net.InetAddress;
 public class MaxMindIpActionHandler extends AbstractClassicActionHandler {
     private static final Logger log = LoggerFactory.getLogger(MaxMindIpActionHandler.class);
     private final File providerDbPath;
-    private final Class<?>[] supportClasses = new Class[] { IpApiIpLocation.class };
 
     public MaxMindIpActionHandler(String providerDbPathStr) {
 
@@ -45,7 +45,7 @@ public class MaxMindIpActionHandler extends AbstractClassicActionHandler {
     @Override
     public <T> T execute(Object input, Class<T> clazz) {
         try {
-            isSupport(supportClasses, clazz);
+            Assert.isSupport(clazz, Boolean.FALSE, IpApiIpLocation.class);
             IpQuery ipQuery = (IpQuery) input;
             String ipAddress = ipQuery.getIpAddress();
             String language = ipQuery.getLanguage();

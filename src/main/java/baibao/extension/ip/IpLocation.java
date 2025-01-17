@@ -5,7 +5,7 @@
 
 package baibao.extension.ip;
 
-import baibao.extension.location.Geolocation;
+import kunlun.data.geo.Geolocation;
 import kunlun.util.StringUtils;
 
 import java.io.Serializable;
@@ -21,6 +21,20 @@ import static kunlun.common.constant.Symbols.EMPTY_STRING;
 public class IpLocation extends Geolocation implements Serializable {
     private String ipAddress;
     private String isp;
+
+    public IpLocation(String ipAddress, String address) {
+        setIpAddress(ipAddress);
+        setAddress(address);
+    }
+
+    public IpLocation(String ipAddress) {
+
+        setIpAddress(ipAddress);
+    }
+
+    public IpLocation() {
+
+    }
 
     public String getIpAddress() {
 

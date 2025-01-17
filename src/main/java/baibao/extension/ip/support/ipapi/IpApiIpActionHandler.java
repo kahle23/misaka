@@ -5,72 +5,65 @@
 
 package baibao.extension.ip.support.ipapi;
 
+import baibao.extension.ip.AbstractIpLocationHandler;
 import baibao.extension.ip.IpLocation;
 import baibao.extension.ip.IpQuery;
-import kunlun.action.support.AbstractClassicActionHandler;
-import kunlun.data.bean.BeanUtils;
+import kunlun.data.Dict;
 import kunlun.data.json.JsonUtils;
 import kunlun.net.http.HttpMethod;
 import kunlun.net.http.HttpUtils;
 import kunlun.net.http.support.SimpleRequest;
 import kunlun.util.MapUtils;
 import kunlun.util.StringUtils;
-import kunlun.util.TypeUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.lang.reflect.ParameterizedType;
 import java.math.BigDecimal;
-import java.util.Map;
+
+import static kunlun.convert.ConversionUtils.convert;
 
 /**
  * Network physical address provider by website(http://ip-api.com).
  * @see <a href="http://ip-api.com/">IP Geolocation API</a>
  * @author Kahle
  */
-public class IpApiIpActionHandler extends AbstractClassicActionHandler {
+public class IpApiIpActionHandler extends AbstractIpLocationHandler {
     private static final Logger log = LoggerFactory.getLogger(IpApiIpActionHandler.class);
-    private final Class<?>[] supportClasses = new Class[] { IpApiIpLocation.class, IpLocation.class};
 
     @Override
-    public <T> T execute(Object input, Class<T> clazz) {
-        isSupport(supportClasses, clazz);
-        IpQuery ipQuery = (IpQuery) input;
-        String ipAddress = ipQuery.getIpAddress();
-        String language = ipQuery.getLanguage();
+    protected IpLocation doQuery(IpQuery ipQuery) {
+        String ipAddress = ipQuery.getIpAddress(), language = ipQuery.getLanguage();
         if (StringUtils.isBlank(language)) { language = "zh-CN"; }
-        SimpleRequest request = SimpleRequest.of(HttpMethod.GET,
-                "http://ip-api.com/json/" + ipAddress + "?lang=" + language);
-        String jsonString = HttpUtils.execute(request).getBodyAsString();
+        // Invoke the API interface.
+        String jsonString = HttpUtils.execute(SimpleRequest.of(HttpMethod.GET
+                , "http://ip-api.com/json/" + ipAddress + "?lang=" + language)).getBodyAsString();
         if (StringUtils.isBlank(jsonString)) { return null; }
-        ParameterizedType parameterizedType = TypeUtils.parameterizedOf(Map.class, String.class, String.class);
-        Map<String, String> map = JsonUtils.parseObject(jsonString, parameterizedType);
-        if (MapUtils.isEmpty(map)) { return null; }
+        Dict dict = JsonUtils.parseObject(jsonString, Dict.class);
+        if (MapUtils.isEmpty(dict)) { return null; }
+        // Construct the result object.
         IpApiIpLocation ipApiIpLocation = new IpApiIpLocation();
         ipApiIpLocation.setIpAddress(ipAddress);
-        ipApiIpLocation.setCountry(map.get("country"));
-        ipApiIpLocation.setCountryCode(map.get("countryCode"));
-        ipApiIpLocation.setRegion(map.get("regionName"));
-        ipApiIpLocation.setRegionCode(map.get("region"));
-        ipApiIpLocation.setCity(map.get("city"));
+        ipApiIpLocation.setCountry(dict.getString("country"));
+        ipApiIpLocation.setCountryCode(dict.getString("countryCode"));
+        ipApiIpLocation.setRegion(dict.getString("regionName"));
+        ipApiIpLocation.setRegionCode(dict.getString("region"));
+        ipApiIpLocation.setCity(dict.getString("city"));
         ipApiIpLocation.setCityCode(null);
-        ipApiIpLocation.setIsp(map.get("isp"));
-        ipApiIpLocation.setOrg(map.get("org"));
-        ipApiIpLocation.setTimezone(map.get("timezone"));
-        ipApiIpLocation.setZip(map.get("zip"));
-        ipApiIpLocation.setAs(map.get("as"));
-        String lat = map.get("lat");
-        String lon = map.get("lon");
+        ipApiIpLocation.setIsp(dict.getString("isp"));
+        ipApiIpLocation.setOrg(dict.getString("org"));
+        ipApiIpLocation.setTimezone(dict.getString("timezone"));
+        ipApiIpLocation.setZip(dict.getString("zip"));
+        ipApiIpLocation.setAs(dict.getString("as"));
+        Object lat = dict.get("lat");
+        Object lon = dict.get("lon");
+        // Parse latitude and longitude.
         try {
-            BigDecimal latitude = lat != null ? new BigDecimal(lat) : null;
-            BigDecimal longitude = lon != null ? new BigDecimal(lon) : null;
-            ipApiIpLocation.setLatitude(latitude);
-            ipApiIpLocation.setLongitude(longitude);
-        }
-        catch (Exception e) {
+            ipApiIpLocation.setLongitude(lon != null ? convert(lon, BigDecimal.class) : null);
+            ipApiIpLocation.setLatitude(lat != null ? convert(lat, BigDecimal.class) : null);
+        } catch (Exception e) {
             log.info("Parse latitude and longitude to double error", e);
         }
-        return BeanUtils.beanToBean(ipApiIpLocation, clazz);
+        return ipApiIpLocation;
     }
 
 }
