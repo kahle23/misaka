@@ -3,7 +3,6 @@ package baibao.extension.ip.support.ipapi;
 import baibao.extension.ip.IpQuery;
 import cn.hutool.json.JSONUtil;
 import kunlun.action.ActionUtils;
-import kunlun.cache.Cache;
 import kunlun.cache.support.SimpleCache;
 import kunlun.cache.support.SimpleCacheConfig;
 import kunlun.data.ReferenceType;
@@ -20,17 +19,12 @@ import java.util.concurrent.TimeUnit;
 public class IpApiIpQueryHandlerTest {
     private static final Logger log = LoggerFactory.getLogger(IpApiIpQueryHandlerTest.class);
     private static final String IP_QUERY_NAME = "ip-query-ipapi";
-    private static final Cache cache;
 
     static {
         JsonUtils.registerHandler(JsonUtils.getDefaultHandlerName(), new FastJsonHandler());
-        cache = new SimpleCache(new SimpleCacheConfig(ReferenceType.SOFT, 3L, TimeUnit.DAYS));
-        ActionUtils.registerHandler(IP_QUERY_NAME, new IpApiIpActionHandler(){
-            @Override
-            protected Cache getCache() {
-                return cache;
-            }
-        });
+        IpApiIpActionHandler handler = new IpApiIpActionHandler();
+        handler.setCache(new SimpleCache(new SimpleCacheConfig(ReferenceType.SOFT, 3L, TimeUnit.DAYS)));
+        ActionUtils.registerHandler(IP_QUERY_NAME, handler);
     }
 
     @Test

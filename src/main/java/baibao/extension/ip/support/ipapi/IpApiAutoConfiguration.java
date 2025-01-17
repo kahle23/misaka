@@ -6,7 +6,6 @@
 package baibao.extension.ip.support.ipapi;
 
 import kunlun.action.ActionUtils;
-import kunlun.cache.Cache;
 import kunlun.cache.CacheUtils;
 import kunlun.cache.support.SimpleCache;
 import kunlun.cache.support.SimpleCacheConfig;
@@ -29,15 +28,11 @@ public class IpApiAutoConfiguration implements InitializingBean, DisposableBean 
 
     @Override
     public void afterPropertiesSet() throws Exception {
-        final String actionName = "ip-query-ipapi";
+        String actionName = "ip-query-ipapi";
         SimpleCacheConfig config = new SimpleCacheConfig(ReferenceType.SOFT, 3L, TimeUnit.DAYS);
         CacheUtils.registerCache(actionName, new SimpleCache(config));
-        IpApiIpActionHandler handler = new IpApiIpActionHandler() {
-            @Override
-            protected Cache getCache() {
-                return CacheUtils.getCache(actionName);
-            }
-        };
+        IpApiIpActionHandler handler = new IpApiIpActionHandler();
+        handler.setCache(CacheUtils.getCache(actionName));
         ActionUtils.registerHandler(actionName, handler);
     }
 

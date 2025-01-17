@@ -7,11 +7,12 @@ package baibao.extension.bank.support.supfree;
 
 import baibao.extension.bank.BankCard;
 import baibao.extension.bank.BankCardQuery;
-import kunlun.action.support.AbstractClassicActionHandler;
+import kunlun.action.AbstractActionHandler;
 import kunlun.net.http.HttpMethod;
 import kunlun.net.http.HttpResponse;
 import kunlun.net.http.HttpUtils;
 import kunlun.net.http.support.SimpleRequest;
+import kunlun.util.Assert;
 import kunlun.util.CollectionUtils;
 import kunlun.util.ObjectUtils;
 import kunlun.util.StringUtils;
@@ -22,13 +23,15 @@ import org.jsoup.select.Elements;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.lang.reflect.Type;
+
 import static kunlun.common.constant.Numbers.*;
 
 /**
  * Bank card information provider based on website "bankcard.supfree.net".
  * @author Kahle
  */
-public class SupfreeBankCardActionHandler extends AbstractClassicActionHandler {
+public class SupfreeBankCardActionHandler extends AbstractActionHandler {
     private static final Logger log = LoggerFactory.getLogger(SupfreeBankCardActionHandler.class);
 
     private String cutoutValue(String data) {
@@ -41,10 +44,10 @@ public class SupfreeBankCardActionHandler extends AbstractClassicActionHandler {
     }
 
     @Override
-    public <T> T execute(Object input, Class<T> clazz) {
+    public Object execute(Object input, String strategy, Type type) {
         String bankCardNumber = null;
         try {
-            isSupport(new Class[]{BankCard.class}, clazz);
+            Assert.isSupport((Class<?>) type, Boolean.FALSE, BankCard.class);
             BankCardQuery bankCardIssuerQuery = (BankCardQuery) input;
             bankCardNumber = bankCardIssuerQuery.getBankCardNumber();
             SimpleRequest request = new SimpleRequest();

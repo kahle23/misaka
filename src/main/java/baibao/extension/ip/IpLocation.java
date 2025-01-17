@@ -63,11 +63,13 @@ public class IpLocation extends Geolocation implements Serializable {
         String city = getCity();
         String district = getDistrict();
         String street = getStreet();
+        String address = getAddress();
         return (StringUtils.isNotBlank(country) ? country + BLANK_SPACE : EMPTY_STRING)
                 + (StringUtils.isNotBlank(region) ? region + BLANK_SPACE : EMPTY_STRING)
                 + (StringUtils.isNotBlank(city) ? city + BLANK_SPACE : EMPTY_STRING)
                 + (StringUtils.isNotBlank(district) ? district + BLANK_SPACE : EMPTY_STRING)
                 + (StringUtils.isNotBlank(street) ? street + BLANK_SPACE : EMPTY_STRING)
+                + (StringUtils.isNotBlank(address) ? address + BLANK_SPACE : EMPTY_STRING)
                 + (StringUtils.isNotBlank(isp) ? isp : EMPTY_STRING);
     }
 

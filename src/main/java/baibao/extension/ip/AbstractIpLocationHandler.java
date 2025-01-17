@@ -1,6 +1,6 @@
 package baibao.extension.ip;
 
-import kunlun.action.support.AbstractClassicActionHandler1;
+import kunlun.action.AbstractActionHandler;
 import kunlun.cache.Cache;
 import kunlun.cache.support.NoCache;
 import kunlun.data.bean.BeanUtils;
@@ -10,8 +10,9 @@ import kunlun.util.StringUtils;
 import java.lang.reflect.Type;
 import java.util.concurrent.Callable;
 
-public abstract class AbstractIpLocationHandler extends AbstractClassicActionHandler1 {
+public abstract class AbstractIpLocationHandler extends AbstractActionHandler {
     private static final String PRIVATE_ADDR = "Private Address";
+    private Cache cache = new NoCache();
 
     protected boolean isPrivateAddr(String ipAddress) {
         if (StringUtils.isBlank(ipAddress)) { return false; }
@@ -23,9 +24,14 @@ public abstract class AbstractIpLocationHandler extends AbstractClassicActionHan
         return false;
     }
 
-    protected Cache getCache() {
+    public Cache getCache() {
 
-        return new NoCache();
+        return cache;
+    }
+
+    public void setCache(Cache cache) {
+        Assert.notNull(cache, "Parameter \"cache\" must not null. ");
+        this.cache = cache;
     }
 
     protected abstract IpLocation doQuery(IpQuery ipQuery);

@@ -5,7 +5,7 @@
 
 package baibao.extension.webhook.support.wxwork;
 
-import kunlun.action.support.AbstractStrategyActionHandler;
+import kunlun.action.AbstractActionHandler;
 import kunlun.data.Dict;
 import kunlun.data.json.JsonUtils;
 import kunlun.exception.ExceptionUtils;
@@ -17,6 +17,8 @@ import kunlun.util.Assert;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.lang.reflect.Type;
+
 import static java.lang.Boolean.FALSE;
 import static kunlun.common.constant.Charsets.STR_UTF_8;
 
@@ -24,7 +26,7 @@ import static kunlun.common.constant.Charsets.STR_UTF_8;
  * Work WeChat message robot.
  * @author Kahle
  */
-public class WxWorkRobotMsgSimpleHandler extends AbstractStrategyActionHandler {
+public class WxWorkRobotMsgSimpleHandler extends AbstractActionHandler {
     private static final Logger log = LoggerFactory.getLogger(WxWorkRobotMsgSimpleHandler.class);
     private final String url;
 
@@ -56,10 +58,9 @@ public class WxWorkRobotMsgSimpleHandler extends AbstractStrategyActionHandler {
     }
 
     @Override
-    public Object execute(Object input, String strategy, Class<?> clazz) {
+    public Object execute(Object input, String strategy, Type type) {
         Assert.notNull(input, "Parameter \"input\" must not null. ");
-        Assert.notNull(clazz, "Parameter \"clazz\" must not null. ");
-        Assert.isSupport(clazz, FALSE, String.class, Object.class);
+        Assert.isSupport((Class<?>) type, FALSE, String.class, Object.class);
         return send(input);
     }
 

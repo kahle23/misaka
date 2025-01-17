@@ -10,7 +10,7 @@ import baibao.extension.ip.support.ipapi.IpApiIpLocation;
 import com.maxmind.geoip2.DatabaseReader;
 import com.maxmind.geoip2.model.CityResponse;
 import com.maxmind.geoip2.record.*;
-import kunlun.action.support.AbstractClassicActionHandler;
+import kunlun.action.AbstractActionHandler;
 import kunlun.exception.ExceptionUtils;
 import kunlun.util.Assert;
 import kunlun.util.ObjectUtils;
@@ -19,6 +19,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.File;
+import java.lang.reflect.Type;
 import java.math.BigDecimal;
 import java.net.InetAddress;
 
@@ -27,7 +28,7 @@ import java.net.InetAddress;
  * @see <a href="https://dev.maxmind.com/geoip/">MaxMind GeoIP</a>
  * @author Kahle
  */
-public class MaxMindIpActionHandler extends AbstractClassicActionHandler {
+public class MaxMindIpActionHandler extends AbstractActionHandler {
     private static final Logger log = LoggerFactory.getLogger(MaxMindIpActionHandler.class);
     private final File providerDbPath;
 
@@ -43,9 +44,9 @@ public class MaxMindIpActionHandler extends AbstractClassicActionHandler {
     }
 
     @Override
-    public <T> T execute(Object input, Class<T> clazz) {
+    public Object execute(Object input, String strategy, Type type) {
         try {
-            Assert.isSupport(clazz, Boolean.FALSE, IpApiIpLocation.class);
+            Assert.isSupport((Class<?>) type, Boolean.FALSE, IpApiIpLocation.class);
             IpQuery ipQuery = (IpQuery) input;
             String ipAddress = ipQuery.getIpAddress();
             String language = ipQuery.getLanguage();

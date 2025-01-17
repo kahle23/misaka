@@ -8,9 +8,10 @@ package baibao.extension.splitter.support;
 import baibao.extension.splitter.TextSplitRequest;
 import baibao.extension.splitter.TextSplitResponse;
 import cn.hutool.core.util.StrUtil;
-import kunlun.action.support.AbstractStrategyActionHandler;
+import kunlun.action.AbstractActionHandler;
 import kunlun.util.Assert;
 
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -20,14 +21,14 @@ import static java.lang.Boolean.FALSE;
 import static kunlun.common.constant.Numbers.ONE;
 import static kunlun.common.constant.Numbers.ZERO;
 
-public abstract class AbstractSimpleTextSplitter extends AbstractStrategyActionHandler {
+public abstract class AbstractSimpleTextSplitter extends AbstractActionHandler {
 
     protected abstract Config getConfig(Object input, String operation, Class<?> clazz);
 
     @Override
-    public Object execute(Object input, String operation, Class<?> clazz) {
+    public Object execute(Object input, String strategy, Type type) {
         //
-        Assert.isSupport(clazz, FALSE, TextSplitResponse.class);
+        Assert.isSupport((Class<?>) type, FALSE, TextSplitResponse.class);
         if (input == null) { return Collections.emptyList(); }
         Assert.isSupport(input.getClass(), FALSE, TextSplitRequest.class, String.class);
         //
@@ -43,7 +44,7 @@ public abstract class AbstractSimpleTextSplitter extends AbstractStrategyActionH
         else { text = String.valueOf(input); }
         if (StrUtil.isBlank(text)) { return Collections.emptyList(); }
         //
-        Config config = getConfig(input, operation, clazz);
+        Config config = getConfig(input, strategy, (Class<?>) type);
         if (separators == null) { separators = config.getSeparators(); }
         if (chunkSize == null) { chunkSize = config.getChunkSize(); }
         TextSplitResponse resp = new TextSplitResponse(new ArrayList<String>());

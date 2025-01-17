@@ -6,12 +6,8 @@
 package baibao.extension.ip.support.ipapi;
 
 import baibao.extension.ip.IpLocation;
-import kunlun.util.StringUtils;
 
 import java.io.Serializable;
-
-import static kunlun.common.constant.Symbols.BLANK_SPACE;
-import static kunlun.common.constant.Symbols.EMPTY_STRING;
 
 /**
  * Network physical address object.
@@ -79,21 +75,6 @@ public class IpApiIpLocation extends IpLocation implements Serializable {
     public void setAs(String as) {
 
         this.as = as;
-    }
-
-    @Override
-    public String toString() {
-        String country = getCountry();
-        String region = getRegion();
-        String city = getCity();
-        String district = getDistrict();
-        String street = getStreet();
-        return (StringUtils.isNotBlank(country) ? country + BLANK_SPACE : EMPTY_STRING)
-                + (StringUtils.isNotBlank(region) ? region + BLANK_SPACE : EMPTY_STRING)
-                + (StringUtils.isNotBlank(city) ? city + BLANK_SPACE : EMPTY_STRING)
-                + (StringUtils.isNotBlank(district) ? district + BLANK_SPACE : EMPTY_STRING)
-                + (StringUtils.isNotBlank(street) ? street + BLANK_SPACE : EMPTY_STRING)
-                + (StringUtils.isNotBlank(getIsp()) ? getIsp() : EMPTY_STRING);
     }
 
 }

@@ -5,7 +5,7 @@
 
 package baibao.extension.webhook.support.dingtalk;
 
-import kunlun.action.support.AbstractStrategyActionHandler;
+import kunlun.action.AbstractActionHandler;
 import kunlun.codec.CodecUtils;
 import kunlun.crypto.Hmac;
 import kunlun.crypto.KeyUtils;
@@ -23,6 +23,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.crypto.SecretKey;
+import java.lang.reflect.Type;
 import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.List;
@@ -39,7 +40,7 @@ import static kunlun.common.constant.Numbers.TWO;
  * The ding talk robot.
  * @author Kahle
  */
-public class DingTalkRobotMsgSimpleHandler extends AbstractStrategyActionHandler {
+public class DingTalkRobotMsgSimpleHandler extends AbstractActionHandler {
     private static final Logger log = LoggerFactory.getLogger(DingTalkRobotMsgSimpleHandler.class);
     private final HttpClient httpClient;
     private final String webHook;
@@ -146,10 +147,9 @@ public class DingTalkRobotMsgSimpleHandler extends AbstractStrategyActionHandler
     }
 
     @Override
-    public Object execute(Object input, String strategy, Class<?> clazz) {
+    public Object execute(Object input, String strategy, Type type) {
         Assert.notNull(input, "Parameter \"input\" must not null. ");
-        Assert.notNull(clazz, "Parameter \"clazz\" must not null. ");
-        Assert.isSupport(clazz, FALSE, String.class, Object.class);
+        Assert.isSupport((Class<?>) type, FALSE, String.class, Object.class);
         return send(input);
     }
 
