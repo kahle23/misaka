@@ -12,14 +12,11 @@ import com.maxmind.geoip2.model.CityResponse;
 import com.maxmind.geoip2.record.*;
 import kunlun.action.AbstractActionHandler;
 import kunlun.exception.ExceptionUtils;
-import kunlun.util.Assert;
-import kunlun.util.ObjectUtils;
 import kunlun.util.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.File;
-import java.lang.reflect.Type;
 import java.math.BigDecimal;
 import java.net.InetAddress;
 
@@ -44,9 +41,8 @@ public class MaxMindIpActionHandler extends AbstractActionHandler {
     }
 
     @Override
-    public Object execute(Object input, String strategy, Type type) {
+    public Object execute(String strategy, Object input) {
         try {
-            Assert.isSupport((Class<?>) type, Boolean.FALSE, IpApiIpLocation.class);
             IpQuery ipQuery = (IpQuery) input;
             String ipAddress = ipQuery.getIpAddress();
             String language = ipQuery.getLanguage();
@@ -78,7 +74,7 @@ public class MaxMindIpActionHandler extends AbstractActionHandler {
             ipGeolocation.setLongitude(BigDecimal.valueOf(location.getLongitude()));
 //            ipGeolocation.setElevation();
 //            ipGeolocation.set;
-            return ObjectUtils.cast(ipGeolocation);
+            return ipGeolocation;
         }
         catch (Exception e) {
             throw ExceptionUtils.wrap(e);

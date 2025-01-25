@@ -16,7 +16,7 @@ public class SimpleTextSplitterTest {
     private static final String handlerName = "simple-text-splitter";
 
     static {
-        ActionUtils.registerHandler(handlerName, new AbstractSimpleTextSplitter() {
+        ActionUtils.registerAction(handlerName, new AbstractSimpleTextSplitter() {
             @Override
             protected Config getConfig(Object input, String operation, Class<?> clazz) {
 
@@ -28,7 +28,7 @@ public class SimpleTextSplitterTest {
     @Test
     public void test1() {
         String text = FileUtil.readString("F:\\test\\test.txt", Charset.forName("utf-8"));
-        List<String> execute = ActionUtils.execute(handlerName, text, List.class);
+        List<String> execute = ActionUtils.execute(handlerName, text);
         for (String str : execute) {
             log.info("chunk: {}", str);
         }

@@ -17,9 +17,6 @@ import kunlun.util.Assert;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.lang.reflect.Type;
-
-import static java.lang.Boolean.FALSE;
 import static kunlun.common.constant.Charsets.STR_UTF_8;
 
 /**
@@ -58,9 +55,8 @@ public class WxWorkRobotMsgSimpleHandler extends AbstractActionHandler {
     }
 
     @Override
-    public Object execute(Object input, String strategy, Type type) {
+    public Object execute(String strategy, Object input) {
         Assert.notNull(input, "Parameter \"input\" must not null. ");
-        Assert.isSupport((Class<?>) type, FALSE, String.class, Object.class);
         return send(input);
     }
 

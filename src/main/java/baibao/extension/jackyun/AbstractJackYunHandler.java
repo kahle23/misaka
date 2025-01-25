@@ -107,9 +107,9 @@ public abstract class AbstractJackYunHandler extends AbstractAutoActionHandler {
     }
 
     @Override
-    public Object execute(Object input, String strategy, Type type) {
+    public Object execute(String strategy, Object input) {
 
-        return invokeApi(input, strategy, (Class<?>) type);
+        return invokeApi(input, strategy, null); // todo actionUtils
     }
 
 }

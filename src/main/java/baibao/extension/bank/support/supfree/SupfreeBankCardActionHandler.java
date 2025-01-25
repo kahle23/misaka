@@ -12,9 +12,7 @@ import kunlun.net.http.HttpMethod;
 import kunlun.net.http.HttpResponse;
 import kunlun.net.http.HttpUtils;
 import kunlun.net.http.support.SimpleRequest;
-import kunlun.util.Assert;
 import kunlun.util.CollectionUtils;
-import kunlun.util.ObjectUtils;
 import kunlun.util.StringUtils;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -22,8 +20,6 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.lang.reflect.Type;
 
 import static kunlun.common.constant.Numbers.*;
 
@@ -44,10 +40,9 @@ public class SupfreeBankCardActionHandler extends AbstractActionHandler {
     }
 
     @Override
-    public Object execute(Object input, String strategy, Type type) {
+    public Object execute(String strategy, Object input) {
         String bankCardNumber = null;
         try {
-            Assert.isSupport((Class<?>) type, Boolean.FALSE, BankCard.class);
             BankCardQuery bankCardIssuerQuery = (BankCardQuery) input;
             bankCardNumber = bankCardIssuerQuery.getBankCardNumber();
             SimpleRequest request = new SimpleRequest();
@@ -89,7 +84,7 @@ public class SupfreeBankCardActionHandler extends AbstractActionHandler {
             bankCard.setBankCardType(bankCardType);
             bankCard.setIssuerIdentificationNumber(issuerIdentificationNumber);
             bankCard.setBankCardNumberLength(bankCardNumberLength);
-            return ObjectUtils.cast(bankCard);
+            return bankCard;
         }
         catch (Exception e) {
             log.info("Failed to find \"{}\" in \"bankcard.supfree.net\". ", bankCardNumber, e);

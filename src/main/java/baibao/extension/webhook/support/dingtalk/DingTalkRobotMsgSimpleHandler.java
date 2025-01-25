@@ -23,13 +23,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.crypto.SecretKey;
-import java.lang.reflect.Type;
 import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static java.lang.Boolean.FALSE;
 import static kunlun.common.constant.Algorithms.HMAC_SHA256;
 import static kunlun.common.constant.Charsets.STR_UTF_8;
 import static kunlun.common.constant.Charsets.UTF_8;
@@ -147,9 +145,8 @@ public class DingTalkRobotMsgSimpleHandler extends AbstractActionHandler {
     }
 
     @Override
-    public Object execute(Object input, String strategy, Type type) {
+    public Object execute(String strategy, Object input) {
         Assert.notNull(input, "Parameter \"input\" must not null. ");
-        Assert.isSupport((Class<?>) type, FALSE, String.class, Object.class);
         return send(input);
     }
 

@@ -33,7 +33,7 @@ public class IpApiAutoConfiguration implements InitializingBean, DisposableBean 
         CacheUtils.registerCache(actionName, new SimpleCache(config));
         IpApiIpActionHandler handler = new IpApiIpActionHandler();
         handler.setCache(CacheUtils.getCache(actionName));
-        ActionUtils.registerHandler(actionName, handler);
+        ActionUtils.registerAction(actionName, handler);
     }
 
     @Override

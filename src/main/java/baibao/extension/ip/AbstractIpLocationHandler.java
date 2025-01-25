@@ -3,11 +3,9 @@ package baibao.extension.ip;
 import kunlun.action.AbstractActionHandler;
 import kunlun.cache.Cache;
 import kunlun.cache.support.NoCache;
-import kunlun.data.bean.BeanUtils;
 import kunlun.util.Assert;
 import kunlun.util.StringUtils;
 
-import java.lang.reflect.Type;
 import java.util.concurrent.Callable;
 
 public abstract class AbstractIpLocationHandler extends AbstractActionHandler {
@@ -37,17 +35,16 @@ public abstract class AbstractIpLocationHandler extends AbstractActionHandler {
     protected abstract IpLocation doQuery(IpQuery ipQuery);
 
     @Override
-    public Object execute(Object input, String strategy, Type type) {
+    public Object execute(String strategy, Object input) {
         // Parameter validation.
         Assert.notNull(input, "Parameter \"parameter\" must not null. ");
-        Assert.isSupport((Class<?>) type, Boolean.TRUE, IpLocation.class);
         Assert.isSupport(input.getClass(), Boolean.TRUE, IpQuery.class);
         final IpQuery ipQuery = (IpQuery) input;
         // Judge whether it is a private address.
-        if (isPrivateAddr(ipQuery.getIpAddress())) {
-            IpLocation location = new IpLocation(ipQuery.getIpAddress(), PRIVATE_ADDR);
-            return BeanUtils.beanToBean(location, (Class<?>) type);
-        }
+//        if (isPrivateAddr(ipQuery.getIpAddress())) {
+//            IpLocation location = new IpLocation(ipQuery.getIpAddress(), PRIVATE_ADDR);
+//            return BeanUtils.beanToBean(location, (Class<?>) type);
+//        } // todo actionUtils
         // Query the geo address of the IP (preferably from the cache).
         return getCache().get(ipQuery.getIpAddress(), new Callable<IpLocation>() {
             @Override

@@ -11,10 +11,8 @@ import kunlun.action.AbstractActionHandler;
 import kunlun.data.bean.BeanUtils;
 import kunlun.file.Csv;
 import kunlun.util.Assert;
-import kunlun.util.ObjectUtils;
 import kunlun.util.RecombineUtils;
 
-import java.lang.reflect.Type;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -30,12 +28,11 @@ public class FileBasedDeviceActionHandler extends AbstractActionHandler {
     }
 
     @Override
-    public Object execute(Object input, String strategy, Type type) {
-        Assert.isSupport((Class<?>) type, Boolean.FALSE, Device.class);
+    public Object execute(String strategy, Object input) {
         DeviceQuery deviceQuery = (DeviceQuery) input;
         String model = deviceQuery.getModel();
         Assert.notBlank(model, "Parameter \"model\" must not blank. ");
-        return ObjectUtils.cast(deviceMap.get(model));
+        return deviceMap.get(model);
     }
 
 }

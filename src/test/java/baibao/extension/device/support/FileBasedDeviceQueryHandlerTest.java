@@ -22,7 +22,7 @@ public class FileBasedDeviceQueryHandlerTest {
             new DeviceAutoConfiguration().afterPropertiesSet();
 
             DeviceQuery deviceQuery = new DeviceQuery("SM901");
-            Device device = ActionUtils.execute("device-query", deviceQuery, Device.class);
+            Device device = ActionUtils.execute("device-query", deviceQuery);
             log.info(JSON.toJSONString(device, TRUE));
         }
         catch (Exception e) {

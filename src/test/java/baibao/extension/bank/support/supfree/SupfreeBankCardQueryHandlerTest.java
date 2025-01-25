@@ -19,22 +19,22 @@ public class SupfreeBankCardQueryHandlerTest {
     @Test
     public void test1() {
         JsonUtils.registerHandler("default", new FastJsonHandler());
-        ActionUtils.registerHandler(BANK_CARD_NAME, new SupfreeBankCardActionHandler());
+        ActionUtils.registerAction(BANK_CARD_NAME, new SupfreeBankCardActionHandler());
 
         BankCardQuery cardQuery = new BankCardQuery("622600687501042806");
-        BankCard bankCard = ActionUtils.execute(BANK_CARD_NAME, cardQuery, BankCard.class);
+        BankCard bankCard = ActionUtils.execute(BANK_CARD_NAME, cardQuery);
         log.info("{}", JSON.toJSONString(bankCard, true));
 
         cardQuery = new BankCardQuery("6230960288002899254");
-        BankCard bankCard1 = ActionUtils.execute(BANK_CARD_NAME, cardQuery, BankCard.class);
+        BankCard bankCard1 = ActionUtils.execute(BANK_CARD_NAME, cardQuery);
         log.info("{}", JSON.toJSONString(bankCard1, true));
 
         cardQuery = new BankCardQuery("6217994000264606028");
-        BankCard bankCard2 = ActionUtils.execute(BANK_CARD_NAME, cardQuery, BankCard.class);
+        BankCard bankCard2 = ActionUtils.execute(BANK_CARD_NAME, cardQuery);
         log.info("{}", JSON.toJSONString(bankCard2, true));
 
         cardQuery = new BankCardQuery("6230666046001759766");
-        BankCard bankCard3 = ActionUtils.execute(BANK_CARD_NAME, cardQuery, BankCard.class);
+        BankCard bankCard3 = ActionUtils.execute(BANK_CARD_NAME, cardQuery);
         log.info("{}", JSON.toJSONString(bankCard3, true));
     }
 

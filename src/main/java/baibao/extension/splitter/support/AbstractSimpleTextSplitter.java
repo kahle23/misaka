@@ -11,7 +11,6 @@ import cn.hutool.core.util.StrUtil;
 import kunlun.action.AbstractActionHandler;
 import kunlun.util.Assert;
 
-import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -26,9 +25,8 @@ public abstract class AbstractSimpleTextSplitter extends AbstractActionHandler {
     protected abstract Config getConfig(Object input, String operation, Class<?> clazz);
 
     @Override
-    public Object execute(Object input, String strategy, Type type) {
+    public Object execute(String strategy, Object input) { // todo actionUtils
         //
-        Assert.isSupport((Class<?>) type, FALSE, TextSplitResponse.class);
         if (input == null) { return Collections.emptyList(); }
         Assert.isSupport(input.getClass(), FALSE, TextSplitRequest.class, String.class);
         //
@@ -44,7 +42,7 @@ public abstract class AbstractSimpleTextSplitter extends AbstractActionHandler {
         else { text = String.valueOf(input); }
         if (StrUtil.isBlank(text)) { return Collections.emptyList(); }
         //
-        Config config = getConfig(input, strategy, (Class<?>) type);
+        Config config = getConfig(input, strategy, null);// todo actionUtils
         if (separators == null) { separators = config.getSeparators(); }
         if (chunkSize == null) { chunkSize = config.getChunkSize(); }
         TextSplitResponse resp = new TextSplitResponse(new ArrayList<String>());

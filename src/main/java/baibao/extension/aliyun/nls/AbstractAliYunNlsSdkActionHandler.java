@@ -10,12 +10,8 @@ import cn.hutool.core.util.StrUtil;
 import com.alibaba.nls.client.AccessToken;
 import kunlun.action.AbstractActionHandler;
 import kunlun.exception.ExceptionUtils;
-import kunlun.util.Assert;
 
 import java.io.Serializable;
-import java.lang.reflect.Type;
-
-import static java.lang.Boolean.FALSE;
 
 /**
  * The AliYun nature language service.
@@ -33,8 +29,8 @@ public abstract class AbstractAliYunNlsSdkActionHandler extends AbstractActionHa
     protected abstract Config getConfig(Object input);
 
     @Override
-    public Object execute(Object input, String strategy, Type type) {
-        if ("getToken".equals(strategy)) { return getToken(input, (Class<?>) type); }
+    public Object execute(String strategy, Object input) {
+        if ("getToken".equals(strategy)) { return getToken(input); }
         else {
             throw new UnsupportedOperationException(
                     "The method is unsupported. \n\n" +
@@ -46,9 +42,8 @@ public abstract class AbstractAliYunNlsSdkActionHandler extends AbstractActionHa
         }
     }
 
-    public Object getToken(Object input, Class<?> clazz) {
+    public TokenResponse getToken(Object input) {
         //
-        Assert.isSupport(clazz, FALSE, TokenResponse.class, Object.class);
         Config config = getConfig(input);
         String accessKeySecret = config.getAccessKeySecret();
         String accessKeyId = config.getAccessKeyId();

@@ -15,7 +15,6 @@ import kunlun.util.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.lang.reflect.Type;
 import java.util.SortedMap;
 import java.util.TreeMap;
 
@@ -132,15 +131,14 @@ public abstract class AbstractPolyApiHandler extends AbstractJackYunHandler {
     }
 
     @Override
-    public Object execute(Object input, String strategy, Type type) {
+    public Object execute(String strategy, Object input) {
         if ("validateSign".equals(strategy)) {
             Assert.notNull(input, "Parameter \"input\" must not null. ");
             Assert.isInstanceOf(PolyApiReq.class, input
                     , "Parameter \"input\" must is instance of PolyApiReq. ");
-            Assert.isSupport((Class<?>) type, Boolean.FALSE, Boolean.class);
             return validateSign((PolyApiReq) input);
         }
-        else { return invokeApi(input, strategy, (Class<?>) type); }
+        else { return invokeApi(input, strategy, null); } // todo actionUtils
     }
 
 }

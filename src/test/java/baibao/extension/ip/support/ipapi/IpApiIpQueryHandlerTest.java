@@ -24,17 +24,17 @@ public class IpApiIpQueryHandlerTest {
         JsonUtils.registerHandler(JsonUtils.getDefaultHandlerName(), new FastJsonHandler());
         IpApiIpActionHandler handler = new IpApiIpActionHandler();
         handler.setCache(new SimpleCache(new SimpleCacheConfig(ReferenceType.SOFT, 3L, TimeUnit.DAYS)));
-        ActionUtils.registerHandler(IP_QUERY_NAME, handler);
+
+        ActionUtils.registerAction(IP_QUERY_NAME, handler);
+        ActionUtils.registerShortcut(IpQuery.class, IP_QUERY_NAME);
     }
 
     @Test
     public void test1() {
-        IpApiIpLocation ipLocation = ActionUtils.execute(IP_QUERY_NAME
-                , new IpQuery("223.98.40.191"), IpApiIpLocation.class);
+        IpApiIpLocation ipLocation = ActionUtils.execute(new IpQuery("223.98.40.191"));
         log.info("{}", JSONUtil.toJsonPrettyStr(ipLocation));
 
-        ipLocation = ActionUtils.execute(IP_QUERY_NAME
-                , new IpQuery("106.57.23.1"), IpApiIpLocation.class);
+        ipLocation = ActionUtils.execute(new IpQuery("106.57.23.1"));
         log.info("{}", JSONUtil.toJsonPrettyStr(ipLocation));
 
         /*
@@ -50,19 +50,16 @@ public class IpApiIpQueryHandlerTest {
                 , new IpQuery("122.238.172.155"), IpApiIpLocation.class);
         log.info("{}", JSONUtil.toJsonPrettyStr(ipLocation));*/
 
-        ipLocation = ActionUtils.execute(IP_QUERY_NAME
-                , new IpQuery("192.168.23.23"), IpApiIpLocation.class);
+        ipLocation = ActionUtils.execute(IP_QUERY_NAME, new IpQuery("192.168.23.23"));
         log.info("{}", JSONUtil.toJsonPrettyStr(ipLocation));
     }
 
     @Test
     public void test2() {
-        IpApiIpLocation ipLocation = ActionUtils.execute(IP_QUERY_NAME
-                , new IpQuery("120.231.22.221"), IpApiIpLocation.class);
+        IpApiIpLocation ipLocation = ActionUtils.execute(IP_QUERY_NAME, new IpQuery("120.231.22.221"));
         log.info("{}", JSONUtil.toJsonPrettyStr(ipLocation));
 
-        ipLocation = ActionUtils.execute(IP_QUERY_NAME
-                , new IpQuery("120.231.22.221"), IpApiIpLocation.class);
+        ipLocation = ActionUtils.execute(IP_QUERY_NAME, new IpQuery("120.231.22.221"));
         log.info("{}", JSONUtil.toJsonPrettyStr(ipLocation));
     }
 
