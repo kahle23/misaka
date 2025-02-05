@@ -7,7 +7,7 @@ package baibao.extension.bank.support.supfree;
 
 import baibao.extension.bank.BankCard;
 import baibao.extension.bank.BankCardQuery;
-import kunlun.action.AbstractActionHandler;
+import kunlun.action.AbstractAction;
 import kunlun.net.http.HttpMethod;
 import kunlun.net.http.HttpResponse;
 import kunlun.net.http.HttpUtils;
@@ -27,8 +27,8 @@ import static kunlun.common.constant.Numbers.*;
  * Bank card information provider based on website "bankcard.supfree.net".
  * @author Kahle
  */
-public class SupfreeBankCardActionHandler extends AbstractActionHandler {
-    private static final Logger log = LoggerFactory.getLogger(SupfreeBankCardActionHandler.class);
+public class SupfreeBankCardAction extends AbstractAction {
+    private static final Logger log = LoggerFactory.getLogger(SupfreeBankCardAction.class);
 
     private String cutoutValue(String data) {
         if (StringUtils.isBlank(data)) { return null; }
@@ -40,7 +40,7 @@ public class SupfreeBankCardActionHandler extends AbstractActionHandler {
     }
 
     @Override
-    public Object execute(String strategy, Object input) {
+    public Object execute(String strategy, Object input, Object[] arguments) {
         String bankCardNumber = null;
         try {
             BankCardQuery bankCardIssuerQuery = (BankCardQuery) input;

@@ -5,7 +5,7 @@
 
 package baibao.extension.ip.support.ipapi;
 
-import baibao.extension.ip.AbstractIpLocationHandler;
+import baibao.extension.ip.AbstractIpLocationAction;
 import baibao.extension.ip.IpLocation;
 import baibao.extension.ip.IpQuery;
 import kunlun.data.Dict;
@@ -27,8 +27,8 @@ import static kunlun.convert.ConversionUtils.convert;
  * @see <a href="http://ip-api.com/">IP Geolocation API</a>
  * @author Kahle
  */
-public class IpApiIpActionHandler extends AbstractIpLocationHandler {
-    private static final Logger log = LoggerFactory.getLogger(IpApiIpActionHandler.class);
+public class IpApiIpLocationAction extends AbstractIpLocationAction {
+    private static final Logger log = LoggerFactory.getLogger(IpApiIpLocationAction.class);
 
     @Override
     protected IpLocation doQuery(IpQuery ipQuery) {

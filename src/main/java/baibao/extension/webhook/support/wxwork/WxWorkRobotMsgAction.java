@@ -5,7 +5,7 @@
 
 package baibao.extension.webhook.support.wxwork;
 
-import kunlun.action.AbstractActionHandler;
+import kunlun.action.AbstractAction;
 import kunlun.data.Dict;
 import kunlun.data.json.JsonUtils;
 import kunlun.exception.ExceptionUtils;
@@ -23,11 +23,11 @@ import static kunlun.common.constant.Charsets.STR_UTF_8;
  * Work WeChat message robot.
  * @author Kahle
  */
-public class WxWorkRobotMsgSimpleHandler extends AbstractActionHandler {
-    private static final Logger log = LoggerFactory.getLogger(WxWorkRobotMsgSimpleHandler.class);
+public class WxWorkRobotMsgAction extends AbstractAction {
+    private static final Logger log = LoggerFactory.getLogger(WxWorkRobotMsgAction.class);
     private final String url;
 
-    public WxWorkRobotMsgSimpleHandler(String key) {
+    public WxWorkRobotMsgAction(String key) {
         Assert.notBlank(key, "Parameter \"key\" must not blank. ");
         this.url = "https://qyapi.weixin.qq.com/cgi-bin/webhook/send?key="+key;
     }
@@ -55,7 +55,7 @@ public class WxWorkRobotMsgSimpleHandler extends AbstractActionHandler {
     }
 
     @Override
-    public Object execute(String strategy, Object input) {
+    public Object execute(String strategy, Object input, Object[] arguments) {
         Assert.notNull(input, "Parameter \"input\" must not null. ");
         return send(input);
     }

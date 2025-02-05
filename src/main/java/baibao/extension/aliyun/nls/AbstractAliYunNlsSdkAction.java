@@ -8,7 +8,7 @@ package baibao.extension.aliyun.nls;
 import baibao.extension.aliyun.nls.model.TokenResponse;
 import cn.hutool.core.util.StrUtil;
 import com.alibaba.nls.client.AccessToken;
-import kunlun.action.AbstractActionHandler;
+import kunlun.action.AbstractAction;
 import kunlun.exception.ExceptionUtils;
 
 import java.io.Serializable;
@@ -19,7 +19,7 @@ import java.io.Serializable;
  * @see <a href="https://help.aliyun.com/document_detail/119258.html">nls document</a>
  * @author Kahle
  */
-public abstract class AbstractAliYunNlsSdkActionHandler extends AbstractActionHandler {
+public abstract class AbstractAliYunNlsSdkAction extends AbstractAction {
 
     /**
      * Get the AliYun nls configuration according to the arguments.
@@ -29,7 +29,7 @@ public abstract class AbstractAliYunNlsSdkActionHandler extends AbstractActionHa
     protected abstract Config getConfig(Object input);
 
     @Override
-    public Object execute(String strategy, Object input) {
+    public Object execute(String strategy, Object input, Object[] arguments) {
         if ("getToken".equals(strategy)) { return getToken(input); }
         else {
             throw new UnsupportedOperationException(

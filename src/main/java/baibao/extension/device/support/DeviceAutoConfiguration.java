@@ -38,7 +38,7 @@ public class DeviceAutoConfiguration implements InitializingBean, DisposableBean
         Csv csv = new Csv();
         csv.setCharset(STR_UTF_8);
         csv.readFromByteArray(decrypt);
-        ActionUtils.registerAction("device-query", new FileBasedDeviceActionHandler(csv));
+        ActionUtils.registerAction("device-query", new FileBasedDeviceAction(csv));
     }
 
     @Override

@@ -22,10 +22,10 @@ public class IpApiIpQueryHandlerTest {
 
     static {
         JsonUtils.registerHandler(JsonUtils.getDefaultHandlerName(), new FastJsonHandler());
-        IpApiIpActionHandler handler = new IpApiIpActionHandler();
-        handler.setCache(new SimpleCache(new SimpleCacheConfig(ReferenceType.SOFT, 3L, TimeUnit.DAYS)));
+        IpApiIpLocationAction action = new IpApiIpLocationAction();
+        action.setCache(new SimpleCache(new SimpleCacheConfig(ReferenceType.SOFT, 3L, TimeUnit.DAYS)));
 
-        ActionUtils.registerAction(IP_QUERY_NAME, handler);
+        ActionUtils.registerAction(IP_QUERY_NAME, action);
         ActionUtils.registerShortcut(IpQuery.class, IP_QUERY_NAME);
     }
 

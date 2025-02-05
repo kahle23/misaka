@@ -19,7 +19,7 @@ public class SupfreeBankCardQueryHandlerTest {
     @Test
     public void test1() {
         JsonUtils.registerHandler("default", new FastJsonHandler());
-        ActionUtils.registerAction(BANK_CARD_NAME, new SupfreeBankCardActionHandler());
+        ActionUtils.registerAction(BANK_CARD_NAME, new SupfreeBankCardAction());
 
         BankCardQuery cardQuery = new BankCardQuery("622600687501042806");
         BankCard bankCard = ActionUtils.execute(BANK_CARD_NAME, cardQuery);

@@ -8,7 +8,7 @@ package baibao.extension.splitter.support;
 import baibao.extension.splitter.TextSplitRequest;
 import baibao.extension.splitter.TextSplitResponse;
 import cn.hutool.core.util.StrUtil;
-import kunlun.action.AbstractActionHandler;
+import kunlun.action.AbstractAction;
 import kunlun.util.Assert;
 
 import java.util.ArrayList;
@@ -20,12 +20,12 @@ import static java.lang.Boolean.FALSE;
 import static kunlun.common.constant.Numbers.ONE;
 import static kunlun.common.constant.Numbers.ZERO;
 
-public abstract class AbstractSimpleTextSplitter extends AbstractActionHandler {
+public abstract class AbstractSimpleTextSplitter extends AbstractAction {
 
     protected abstract Config getConfig(Object input, String operation, Class<?> clazz);
 
     @Override
-    public Object execute(String strategy, Object input) { // todo actionUtils
+    public Object execute(String strategy, Object input, Object[] arguments) { // todo actionUtils
         //
         if (input == null) { return Collections.emptyList(); }
         Assert.isSupport(input.getClass(), FALSE, TextSplitRequest.class, String.class);

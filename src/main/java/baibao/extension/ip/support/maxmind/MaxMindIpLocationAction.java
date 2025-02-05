@@ -10,7 +10,7 @@ import baibao.extension.ip.support.ipapi.IpApiIpLocation;
 import com.maxmind.geoip2.DatabaseReader;
 import com.maxmind.geoip2.model.CityResponse;
 import com.maxmind.geoip2.record.*;
-import kunlun.action.AbstractActionHandler;
+import kunlun.action.AbstractAction;
 import kunlun.exception.ExceptionUtils;
 import kunlun.util.StringUtils;
 import org.slf4j.Logger;
@@ -25,23 +25,23 @@ import java.net.InetAddress;
  * @see <a href="https://dev.maxmind.com/geoip/">MaxMind GeoIP</a>
  * @author Kahle
  */
-public class MaxMindIpActionHandler extends AbstractActionHandler {
-    private static final Logger log = LoggerFactory.getLogger(MaxMindIpActionHandler.class);
+public class MaxMindIpLocationAction extends AbstractAction {
+    private static final Logger log = LoggerFactory.getLogger(MaxMindIpLocationAction.class);
     private final File providerDbPath;
 
-    public MaxMindIpActionHandler(String providerDbPathStr) {
+    public MaxMindIpLocationAction(String providerDbPathStr) {
 
         this(new File(providerDbPathStr));
     }
 
-    public MaxMindIpActionHandler(File providerDbPath) {
+    public MaxMindIpLocationAction(File providerDbPath) {
         // http://dev.maxmind.com/geoip/geoip2/geolite2/
         this.providerDbPath = providerDbPath;
         log.info("MaxMind Ip Geolocation Provider database path: {}", providerDbPath);
     }
 
     @Override
-    public Object execute(String strategy, Object input) {
+    public Object execute(String strategy, Object input, Object[] arguments) {
         try {
             IpQuery ipQuery = (IpQuery) input;
             String ipAddress = ipQuery.getIpAddress();

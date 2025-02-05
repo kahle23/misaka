@@ -5,7 +5,7 @@
 
 package baibao.extension.jackyun.polyapi;
 
-import baibao.extension.jackyun.AbstractJackYunHandler;
+import baibao.extension.jackyun.AbstractJackYunAction;
 import kunlun.data.Dict;
 import kunlun.data.json.JsonUtils;
 import kunlun.net.http.HttpMethod;
@@ -24,10 +24,10 @@ import java.util.TreeMap;
  * @see <a href="https://api.jackyun.com/wkdoc/share/doc/doc.html?id=5EEF82702986F8B5903E4E49EDB494D9">菠萝派自建商城消息推送接口</a>
  * @author Kahle
  */
-public abstract class AbstractPolyApiHandler extends AbstractJackYunHandler {
-    private static final Logger log = LoggerFactory.getLogger(AbstractPolyApiHandler.class);
+public abstract class AbstractPolyApiAction extends AbstractJackYunAction {
+    private static final Logger log = LoggerFactory.getLogger(AbstractPolyApiAction.class);
 
-    public AbstractPolyApiHandler(String actionName) {
+    public AbstractPolyApiAction(String actionName) {
 
         super(actionName);
     }
@@ -131,7 +131,7 @@ public abstract class AbstractPolyApiHandler extends AbstractJackYunHandler {
     }
 
     @Override
-    public Object execute(String strategy, Object input) {
+    public Object execute(String strategy, Object input, Object[] arguments) {
         if ("validateSign".equals(strategy)) {
             Assert.notNull(input, "Parameter \"input\" must not null. ");
             Assert.isInstanceOf(PolyApiReq.class, input

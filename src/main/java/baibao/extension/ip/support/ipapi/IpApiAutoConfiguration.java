@@ -31,9 +31,9 @@ public class IpApiAutoConfiguration implements InitializingBean, DisposableBean 
         String actionName = "ip-query-ipapi";
         SimpleCacheConfig config = new SimpleCacheConfig(ReferenceType.SOFT, 3L, TimeUnit.DAYS);
         CacheUtils.registerCache(actionName, new SimpleCache(config));
-        IpApiIpActionHandler handler = new IpApiIpActionHandler();
-        handler.setCache(CacheUtils.getCache(actionName));
-        ActionUtils.registerAction(actionName, handler);
+        IpApiIpLocationAction action = new IpApiIpLocationAction();
+        action.setCache(CacheUtils.getCache(actionName));
+        ActionUtils.registerAction(actionName, action);
     }
 
     @Override

@@ -1,6 +1,6 @@
 package baibao.extension.ip;
 
-import kunlun.action.AbstractActionHandler;
+import kunlun.action.AbstractAction;
 import kunlun.cache.Cache;
 import kunlun.cache.support.NoCache;
 import kunlun.util.Assert;
@@ -8,7 +8,7 @@ import kunlun.util.StringUtils;
 
 import java.util.concurrent.Callable;
 
-public abstract class AbstractIpLocationHandler extends AbstractActionHandler {
+public abstract class AbstractIpLocationAction extends AbstractAction {
     private static final String PRIVATE_ADDR = "Private Address";
     private Cache cache = new NoCache();
 
@@ -35,7 +35,7 @@ public abstract class AbstractIpLocationHandler extends AbstractActionHandler {
     protected abstract IpLocation doQuery(IpQuery ipQuery);
 
     @Override
-    public Object execute(String strategy, Object input) {
+    public Object execute(String strategy, Object input, Object[] arguments) {
         // Parameter validation.
         Assert.notNull(input, "Parameter \"parameter\" must not null. ");
         Assert.isSupport(input.getClass(), Boolean.TRUE, IpQuery.class);

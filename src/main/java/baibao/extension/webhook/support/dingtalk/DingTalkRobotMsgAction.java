@@ -5,7 +5,7 @@
 
 package baibao.extension.webhook.support.dingtalk;
 
-import kunlun.action.AbstractActionHandler;
+import kunlun.action.AbstractAction;
 import kunlun.codec.CodecUtils;
 import kunlun.crypto.Hmac;
 import kunlun.crypto.KeyUtils;
@@ -38,18 +38,18 @@ import static kunlun.common.constant.Numbers.TWO;
  * The ding talk robot.
  * @author Kahle
  */
-public class DingTalkRobotMsgSimpleHandler extends AbstractActionHandler {
-    private static final Logger log = LoggerFactory.getLogger(DingTalkRobotMsgSimpleHandler.class);
+public class DingTalkRobotMsgAction extends AbstractAction {
+    private static final Logger log = LoggerFactory.getLogger(DingTalkRobotMsgAction.class);
     private final HttpClient httpClient;
     private final String webHook;
     private final String secret;
 
-    public DingTalkRobotMsgSimpleHandler(String webHook, String secret) {
+    public DingTalkRobotMsgAction(String webHook, String secret) {
 
         this(HttpUtils.getHttpClient(HttpUtils.getDefaultClientName()), webHook, secret);
     }
 
-    public DingTalkRobotMsgSimpleHandler(HttpClient httpClient, String webHook, String secret) {
+    public DingTalkRobotMsgAction(HttpClient httpClient, String webHook, String secret) {
         Assert.notNull(httpClient, "Parameter \"httpClient\" must not null. ");
         Assert.notBlank(webHook, "Parameter \"webHook\" must not blank. ");
         Assert.notBlank(secret, "Parameter \"secret\" must not blank. ");
@@ -145,7 +145,7 @@ public class DingTalkRobotMsgSimpleHandler extends AbstractActionHandler {
     }
 
     @Override
-    public Object execute(String strategy, Object input) {
+    public Object execute(String strategy, Object input, Object[] arguments) {
         Assert.notNull(input, "Parameter \"input\" must not null. ");
         return send(input);
     }

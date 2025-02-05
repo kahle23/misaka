@@ -21,10 +21,10 @@ import java.util.TreeMap;
  * @see <a href="https://open.jackyun.com/developer/apidocinfo.html">吉客云开放平台 - API接口</>
  * @author Kahle
  */
-public abstract class AbstractJackYunOpenApiHandler extends AbstractJackYunHandler {
-    private static final Logger log = LoggerFactory.getLogger(AbstractJackYunOpenApiHandler.class);
+public abstract class AbstractJackYunOpenApiAction extends AbstractJackYunAction {
+    private static final Logger log = LoggerFactory.getLogger(AbstractJackYunOpenApiAction.class);
 
-    public AbstractJackYunOpenApiHandler(String actionName) {
+    public AbstractJackYunOpenApiAction(String actionName) {
 
         super(actionName);
     }
